@@ -15,8 +15,9 @@ jobs:
           type: 'zip'
           filename: 'subnautica.apworld'
           exclusions: '*.git* *.md'
-      - name: Upload Release
-        uses: ncipollo/release-action@v1.12.0
+      - name: Upload APWorld to release
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          artifacts: "subnautica.apworld"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          args: 'subnautica.apworld'
