@@ -1,0 +1,22 @@
+on:
+   release: 
+     types: [created]
+jobs:
+  generate:
+    name: Create release artifacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v6.0.1
+      - name: Add Archive to Release
+        uses: thedoctor0/zip-release@0.7.5
+        with:
+          type: 'zip'
+          filename: 'subnautica.apworld'
+          exclusions: '*.git* *.md'
+      - name: Upload Release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          artifacts: "subnautica.apworld"
+          token: ${{ secrets.GITHUB_TOKEN }}
