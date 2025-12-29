@@ -422,7 +422,7 @@ def can_scan_plant(state: "CollectionState", player: int, options: SubnauticaOpt
 
 
 def set_plant_rule(world, player: int, options: SubnauticaOptions, plant_name: str):
-    location = world.get_location(plant_name, player)
+    location = world.get_location(plant_name)
     set_rule(location, lambda state: can_scan_plant(state, player, options, plant_name))
 
 
@@ -450,7 +450,7 @@ def set_rules(subnautica_world: "SubnauticaWorld"):
             set_plant_rule(subnautica_world, player, subnautica_world.options, plant_name)
 
     # Victory locations
-    if multiworld.goal[player].get_event_name() == "Neptune Launch":
+    if subnautica_world.options.goal.get_event_name() == "Neptune Launch":
         set_rule(subnautica_world.get_location("Neptune Launch"),
              lambda state:
              get_max_depth(state, player, subnautica_world.options) >= 1444 and
@@ -464,15 +464,15 @@ def set_rules(subnautica_world: "SubnauticaWorld"):
              state.has("Ion Battery", player) and
              has_cyclops_shield(state, player, subnautica_world.options))
 
-    if multiworld.goal[player].get_event_name() == "Disable Quarantine":
+    if subnautica_world.options.goal.get_event_name() == "Disable Quarantine":
         set_rule(subnautica_world.get_location("Disable Quarantine"),
              lambda state: get_max_depth(state, player, subnautica_world.options) >= 1444)
 
-    if multiworld.goal[player].get_event_name() == "Full Infection":
+    if subnautica_world.options.goal.get_event_name() == "Full Infection":
         set_rule(subnautica_world.get_location("Full Infection"),
              lambda state: get_max_depth(state, player, subnautica_world.options) >= 900)
 
-    if multiworld.goal[player].get_event_name() == "Repair Aurora Drive":
+    if subnautica_world.options.goal.get_event_name() == "Repair Aurora Drive":
         room = subnautica_world.get_location("Aurora Drive Room - Upgrade Console")
         set_rule(subnautica_world.get_location("Repair Aurora Drive"),
              lambda state: room.can_reach(state))
