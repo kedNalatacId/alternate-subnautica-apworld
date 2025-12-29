@@ -1,7 +1,7 @@
 
 ### Alternate Subnautica APworld
 
-This apworld is meant to be used with (Archipelago)[https://github.com/ArchipelagoMW/Archipelago] and a custom (SubnauticMod)[https://github.com/kedNalatacId/ArchipelagoSubnauticaModSrc].
+This apworld is meant to be used with [Archipelago](https://github.com/ArchipelagoMW/Archipelago) and a custom [SubnauticMod](https://github.com/kedNalatacId/ArchipelagoSubnauticaModSrc).
 
 This apworld can generate "classic" options so that it works with classic subnautica mod which allows playing the custom and non-custom subnautica side by side inside the same archipelago instance.
 
