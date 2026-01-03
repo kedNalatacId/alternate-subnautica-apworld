@@ -102,6 +102,27 @@ class ReduceResourceClutter(Toggle):
     where the server and client may disconnect and resources may accidentally get double/triple/quadruple-sent"""
     display_name: "Reduce Resource Clutter"
 
+
+class ReaperAggroDistance(Choice):
+    """Aggro distance of Reaper Leviathans.
+    Double: Double the aggro distance
+    Normal: Regular aggro distance (default)
+    Half:  Halve the aggro distance
+    Quarter: Quarter the aggro distance
+    None: Aggro distance is set to zero, they will not aggro unless you are inside their hitbox"""
+    display_name = "Reaper Aggro Distance"
+    option_normal = 0
+    option_double = 1
+    option_half = 2
+    option_quarter = 3
+    option_none = 4
+
+
+class WarperSpawn(DefaultOnToggle):
+    """Whether or not Warpers spawn in. Disabling this causes warpers to never spawn in."""
+    display_name = "Warpers Spawn"
+
+
 class IgnoreRadiation(Toggle):
     """Whether to allow soaking radiation damage to access checks.
     Don't enable this unless you think you can fix the Aurora without the radiation suit."""
@@ -208,7 +229,7 @@ class FillerItemsDistribution(ItemDict):
         return list(self.value.keys()), list(accumulate(self.value.values()))
 
 
-class EmptyTanks(DefaultOnToggle):
+class EmptyTanks(Toggle):
     """Oxygen Tanks stored in inventory are empty if enabled."""
 
 
@@ -225,6 +246,8 @@ class SubnauticaOptions(PerGameCommonOptions):
     pre_seaglide_distance: PreSeaglideDistance
     free_samples: FreeSamples
     reduce_resource_clutter: ReduceResourceClutter
+    reaper_aggro_distance: ReaperAggroDistance
+    warper_spawn: WarperSpawn
     ignore_radiation: IgnoreRadiation
     can_slip_through: CanSlipThrough
     goal: Goal
