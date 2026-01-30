@@ -185,10 +185,8 @@ def get_max_swim_depth(state: "CollectionState", player: int, options: Subnautic
 
 # swim speeds: https://subnautica.fandom.com/wiki/Swimming_Speed
 def get_additional_item_depth(state: "CollectionState", player: int, options: SubnauticaOptions, theoretical: bool = False) -> int:
-    consider_items: bool = options.swim_rule.value > 999
-    seaglide_added_depth: int = 200
-    if not options.classic.value:
-        seaglide_added_depth = options.seaglide_depth.value
+    consider_items: bool = options.swim_rule.value > 999 or options.consider_items.value
+    seaglide_added_depth: int = options.seaglide_depth.value
 
     if not consider_items:
         return 0
@@ -358,9 +356,7 @@ def can_access_location(state: "CollectionState", player: int, options: Subnauti
     # TODO: add prawn + grapple?
     # TODO: allow changing pre-seaglide depth? (maybe not? Is pretty important)
     map_center_dist = math.sqrt(pos_x ** 2 + pos_z ** 2)
-    pre_seaglide_distance: int = 800
-    if not options.classic.value:
-        pre_seaglide_distance = options.pre_seaglide_distance.value
+    pre_seaglide_distance: int = options.pre_seaglide_distance.value
     if (map_center_dist > pre_seaglide_distance or depth > 200) and (
             not has_seaglide(state, player) and \
             not has_seamoth(state, player, options) and \
@@ -421,9 +417,7 @@ def can_scan_plant(state: "CollectionState", player: int, options: SubnauticaOpt
     depth = -pos_y  # y-up
 
     map_center_dist = math.sqrt(pos_x ** 2 + pos_z ** 2)
-    pre_seaglide_distance: int = 800
-    if not options.classic.value:
-        pre_seaglide_distance = options.pre_seaglide_distance.value
+    pre_seaglide_distance: int = options.pre_seaglide_distance.value
     if (map_center_dist > pre_seaglide_distance or depth > 200) and \
             not has_seaglide(state, player) and \
             not has_seamoth(state, player, options) and \

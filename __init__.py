@@ -108,16 +108,13 @@ class SubnauticaWorld(World):
     def get_theoretical_swim_depth(self):
         depth: int = 600
         consider_items: bool = False
-        seaglide_depth: int = 200
+        seaglide_depth: int = self.options.seaglide_depth.value
         if self.options.swim_rule.value > 999:
             depth = int(self.options.swim_rule.value / 10)
-            consider_items = self.options.swim_rule.value > 999
+            consider_items = True
         else:
             depth = self.options.swim_rule.value
             consider_items = self.options.consider_items.value
-
-        if self.options.classic.value:
-            seaglide_depth: int = self.options.seaglide_depth.value
 
         if consider_items:
             return depth + seaglide_depth + 150
@@ -256,21 +253,23 @@ class SubnauticaWorld(World):
     def fill_slot_data(self) -> Dict[str, Any]:
         vanilla_tech: List[str] = []
 
+        temp_swim_rule: int = self.options.swim_rule.value
+        temp_consider_items: bool = False
+        if temp_swim_rule > 999:
+            temp_swim_rule = int(temp_swim_rule / 10)
+            temp_consider_items = True
+
         slot_data: Dict[str, Any] = {}
         if self.options.classic.value:
             # Classic Swim Rule is a string
             classic_swim_rule[str] = "easy"
-            temp_swim_rule: int = self.options.swim_rule.value
-            if temp_swim_rule > 999:
-                temp_swim_rule = int(temp_swim_rule / 10)
             if temp_swim_rule > 200 and temp_swim_rule <= 400:
                 classic_swim_rule = "normal"
             elif temp_swim_rule > 400:
                 classic_swim_rule = "hard"
 
-            if self.options.swim_rule.value > 999 or \
-                    (self.options.classic.value and self.options.consider_items.value):
-                classic_swim_rule += "_items"
+            if temp_consider_items:
+                classic_swim_rule = "items_" + classic_swim_rule
 
             slot_data = {
                 "goal": self.options.goal.current_key,
@@ -281,10 +280,11 @@ class SubnauticaWorld(World):
                 "free_samples": self.options.free_samples.value,
             }
         else:
+            temp_consider_items = temp_consider_items or self.options.consider_items.value
             slot_data = {
                 "goal": self.options.goal.current_key,
-                "swim_rule": self.options.swim_rule.value,
-                "consider_items": self.options.consider_items.value,
+                "swim_rule": temp_swim_rule,
+                "consider_items": temp_consider_items,
                 "early_seaglide": self.options.early_seaglide.value,
                 "seaglide_depth": self.options.seaglide_depth.value,
                 "pre_seaglide_distance": self.options.pre_seaglide_distance.value,
