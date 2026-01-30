@@ -34,9 +34,9 @@ class SwimRule(NamedRange):
         "easy": 200,
         "normal": 400,
         "hard": 600,
-        "easy_items": 2000,
-        "normal_items": 4000,
-        "hard_items": 6000
+        "items_easy": 2000,
+        "items_normal": 4000,
+        "items_hard": 6000
     }
 
 class ConsiderItems(Toggle):
