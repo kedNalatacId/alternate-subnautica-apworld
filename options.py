@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from functools import cached_property
 
 from Options import (
-    Choice, Range, DeathLink, Toggle, DefaultOnToggle,
+    Choice, Range, NamedRange, DeathLink, Toggle, DefaultOnToggle,
     StartInventoryPool, ItemDict, PerGameCommonOptions
 )
 from .creatures import all_creatures, Definitions
@@ -15,7 +15,7 @@ class Classic(Toggle):
     """Use Classic mode slot data; allows backwards compatability with OG AP Subnautica."""
     display_name = "Classic"
 
-class SwimRule(Range):
+class SwimRule(NamedRange):
     """What logic considers ok swimming distances.
     Easy: 100-200 depth from any max vehicle depth.
     Normal: 200-400 depth from any max vehicle depth.
@@ -30,6 +30,14 @@ class SwimRule(Range):
     default = 200
     range_end = 600
 
+    special_range_names = {
+        "easy": 200,
+        "normal": 400,
+        "hard": 600,
+        "easy_items": 2000,
+        "normal_items": 4000,
+        "hard_items": 6000
+    }
 
 class ConsiderItems(Toggle):
     """Whether expected depth is extended by items like seaglide, ultra glide fins and capacity tanks."""
