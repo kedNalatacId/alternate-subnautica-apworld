@@ -12,7 +12,7 @@ jobs:
       - name: Move files to subdirectory
         run: |
           mkdir -p subnautica
-          mv * subnautica/
+          mv * subnautica/ || true
       - name: Add Archive to Release
         uses: thedoctor0/zip-release@0.7.5
         with:
