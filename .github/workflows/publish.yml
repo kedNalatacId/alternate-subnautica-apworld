@@ -9,11 +9,16 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v6.0.1
+      - name: Move files to subdirectory
+        run: |
+          mkdir -p subnautica
+          mv * subnautica/ || true
       - name: Add Archive to Release
         uses: thedoctor0/zip-release@0.7.5
         with:
           type: 'zip'
           filename: 'subnautica.apworld'
+          path: "subnautica/"
           exclusions: '*.git* *.md'
       - name: Upload APWorld to release
         uses: skx/github-action-publish-binaries@master
